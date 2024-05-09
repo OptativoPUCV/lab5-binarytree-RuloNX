@@ -151,12 +151,6 @@ Pair * upperBound(TreeMap * tree, void* key) {
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
-}
-
-Pair * nextTreeMap(TreeMap * tree) {
-}
-/*
-Pair * firstTreeMap(TreeMap * tree) {
     TreeNode* current = tree->root;
     if (current == NULL) {
         return NULL;
@@ -193,4 +187,3 @@ Pair * nextTreeMap(TreeMap * tree) {
     }
     return NULL;
 }
-*/

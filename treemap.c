@@ -139,7 +139,15 @@ Pair * upperBound(TreeMap * tree, void* key) {
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
-    return NULL;
+    TreeNode* current = tree->root;
+    if (current == NULL) {
+        return NULL;
+    }
+    while (current->left != NULL) {
+        current = current->left;
+    }
+    tree->current = current;
+    return current->pair;
 }
 
 

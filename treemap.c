@@ -117,17 +117,68 @@ void eraseTreeMap(TreeMap * tree, void* key){
 }
 
 Pair * searchTreeMap(TreeMap * tree, void* key) {
+    TreeNode* current = tree->root;
+    while (current != NULL) {
+        if (is_equal(tree, current->pair->key, key)) {
+            tree->current = current;
+            return current->pair;
+        } else if (tree->lower_than(key, current->pair->key)) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+    tree->current = NULL;
     return NULL;
 }
-
 Pair * upperBound(TreeMap * tree, void* key) {
+    TreeNode* current = tree->root;
+    TreeNode* upper_bound = NULL;
+    while (current != NULL) {
+        if (tree->lower_than(key, current->pair->key)) {
+            upper_bound = current;
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+    if (upper_bound != NULL) {
+        return upper_bound->pair;
+    }
     return NULL;
 }
-
 Pair * firstTreeMap(TreeMap * tree) {
-    return NULL;
+    TreeNode* current = tree->root;
+    if (current == NULL) {
+        return NULL;
+    }
+    while (current->left != NULL) {
+        current = current->left;
+    }
+    tree->current = current;
+    return current->pair;
 }
-
 Pair * nextTreeMap(TreeMap * tree) {
+    TreeNode* current = tree->current;
+    if (current == NULL) {
+        return NULL;
+    }
+    if (current->right != NULL) {
+        current = current->right;
+        while (current->left != NULL) {
+            current = current->left;
+        }
+    } else {
+        TreeNode* parent = current->parent;
+        while (parent != NULL && current == parent->right) {
+            current = parent;
+            parent = parent->parent;
+        }
+        current = parent;
+    }
+    tree->current = current;
+    if (current != NULL) {
+        return current->pair;
+    }
     return NULL;
 }

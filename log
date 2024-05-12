@@ -347,3 +347,41 @@ Sun 12 May 2024 02:54:32 AM UTC:
  tests:  22|2
 total_score: 50/70
 3ce9179
+Sun 12 May 2024 03:01:27 AM UTC: 
+ treemap.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+In file included from test.c:4:
+treemap.c: In function ‘_strdup’:
+treemap.c:88:12: error: returning ‘char *’ from a function with incompatible return type ‘Pair *’ [-Werror=incompatible-pointer-types]
+   88 |     return duplicate;
+      |            ^~~~~~~~~
+treemap.c: In function ‘removeNode’:
+treemap.c:115:31: error: implicit declaration of function ‘minimum’ [-Werror=implicit-function-declaration]
+  115 |         TreeNode* successor = minimum(node->right);
+      |                               ^~~~~~~
+treemap.c:115:31: error: initialization of ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+treemap.c: In function ‘nextTreeMap’:
+treemap.c:183:17: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  183 |         current = minimum(current->right);
+      |                 ^
+test.c: At top level:
+test.c:6:8: error: conflicting types for ‘_strdup’; have ‘char *(const char *)’
+    6 | char * _strdup(const char * str) {
+      |        ^~~~~~~
+In file included from test.c:4:
+treemap.c:82:7: note: previous definition of ‘_strdup’ with type ‘Pair *(const char *)’
+   82 | Pair *_strdup(const char *str) {
+      |       ^~~~~~~
+test.c: In function ‘minimum_test’:
+test.c:225:19: error: initialization of ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  225 |     TreeNode* n = minimum(tree->root);
+      |                   ^~~~~~~
+test.c:239:7: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  239 |     n = minimum(tree->root->left);
+      |       ^
+test.c:250:7: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  250 |     n = minimum(tree->root);
+      |       ^
+cc1: all warnings being treated as errors
+Compilation failed
+9bca0c5

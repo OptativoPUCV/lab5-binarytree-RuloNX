@@ -44,6 +44,7 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
     return tree;
 }
 
+
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
     TreeNode* new_node = createTreeNode(key, value);
     if (tree->root == NULL) {
@@ -56,28 +57,38 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     while (current != NULL) {
         parent = current;
         if (tree->lower_than(key, current->pair->key)) {
-            current = current->left;
+            if (current->left != NULL) {
+                current = current->left;
+            } else {
+                break;
+            }
         } else {
-            current = current->right;
+            if (current->right != NULL) {
+                current = current->right;
+            } else {
+                break;
+            }
         }
     }
     new_node->parent = parent;
-    if (tree->lower_than(key, parent->pair->key)) {
+    if (parent != NULL && tree->lower_than(key, parent->pair->key)) {
         parent->left = new_node;
     } else {
         parent->right = new_node;
     }
     tree->current = new_node;
 }
-TreeNode * minimum(TreeNode * x) {
-    if (x == NULL) {
+
+Pair *_strdup(const char *str) {
+    char *duplicate = (char *)malloc(strlen(str) + 1);
+    if (duplicate == NULL) {
         return NULL;
     }
-    while (x->left != NULL) {
-        x = x->left;
-    }
-    return x;
+    strcpy(duplicate, str);
+    return duplicate;
 }
+
+
 void removeNode(TreeMap * tree, TreeNode* node) {
     if (node->left == NULL && node->right == NULL) {
         if (node == node->parent->left) {
@@ -136,7 +147,6 @@ Pair * searchTreeMap(TreeMap * tree, void* key) {
 Pair * upperBound(TreeMap * tree, void* key) {
     TreeNode *current = tree->root;
     Pair *upper = NULL;
-
     while (current != NULL) {
         if (tree->lower_than(key, current->pair->key)) {
             if (upper == NULL || tree->lower_than(current->pair->key, upper->key)) {
@@ -147,7 +157,6 @@ Pair * upperBound(TreeMap * tree, void* key) {
             current = current->right;
         }
     }
-
     return upper;
 }
 

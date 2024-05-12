@@ -44,7 +44,6 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
     return tree;
 }
 
-
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
     TreeNode* new_node = createTreeNode(key, value);
     if (tree->root == NULL) {
@@ -57,29 +56,28 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     while (current != NULL) {
         parent = current;
         if (tree->lower_than(key, current->pair->key)) {
-            if (current->left != NULL) {
-                current = current->left;
-            } else {
-                break;
-            }
+            current = current->left;
         } else {
-            if (current->right != NULL) {
-                current = current->right;
-            } else {
-                break;
-            }
+            current = current->right;
         }
     }
     new_node->parent = parent;
-    if (parent != NULL && tree->lower_than(key, parent->pair->key)) {
+    if (tree->lower_than(key, parent->pair->key)) {
         parent->left = new_node;
     } else {
         parent->right = new_node;
     }
     tree->current = new_node;
 }
-
-
+TreeNode * minimum(TreeNode * x) {
+    if (x == NULL) {
+        return NULL;
+    }
+    while (x->left != NULL) {
+        x = x->left;
+    }
+    return x;
+}
 
 
 void removeNode(TreeMap * tree, TreeNode* node) {
@@ -140,6 +138,7 @@ Pair * searchTreeMap(TreeMap * tree, void* key) {
 Pair * upperBound(TreeMap * tree, void* key) {
     TreeNode *current = tree->root;
     Pair *upper = NULL;
+
     while (current != NULL) {
         if (tree->lower_than(key, current->pair->key)) {
             if (upper == NULL || tree->lower_than(current->pair->key, upper->key)) {
@@ -150,6 +149,7 @@ Pair * upperBound(TreeMap * tree, void* key) {
             current = current->right;
         }
     }
+
     return upper;
 }
 

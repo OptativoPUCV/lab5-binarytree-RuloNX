@@ -79,14 +79,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     tree->current = new_node;
 }
 
-Pair *_strdup(const char *str) {
-    char *duplicate = (char *)malloc(strlen(str) + 1);
-    if (duplicate == NULL) {
-        return NULL;
-    }
-    strcpy(duplicate, str);
-    return duplicate;
-}
+
 
 
 void removeNode(TreeMap * tree, TreeNode* node) {

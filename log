@@ -385,3 +385,29 @@ test.c:250:7: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer
 cc1: all warnings being treated as errors
 Compilation failed
 9bca0c5
+Sun 12 May 2024 03:01:44 AM UTC: 
+ treemap.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+In file included from test.c:4:
+treemap.c: In function ‘removeNode’:
+treemap.c:108:31: error: implicit declaration of function ‘minimum’ [-Werror=implicit-function-declaration]
+  108 |         TreeNode* successor = minimum(node->right);
+      |                               ^~~~~~~
+treemap.c:108:31: error: initialization of ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+treemap.c: In function ‘nextTreeMap’:
+treemap.c:176:17: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  176 |         current = minimum(current->right);
+      |                 ^
+test.c: In function ‘minimum_test’:
+test.c:225:19: error: initialization of ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  225 |     TreeNode* n = minimum(tree->root);
+      |                   ^~~~~~~
+test.c:239:7: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  239 |     n = minimum(tree->root->left);
+      |       ^
+test.c:250:7: error: assignment to ‘TreeNode *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+  250 |     n = minimum(tree->root);
+      |       ^
+cc1: all warnings being treated as errors
+Compilation failed
+70f2ac8
